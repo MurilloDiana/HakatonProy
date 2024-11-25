@@ -5,10 +5,10 @@ import SpeechRecognition, { useSpeechRecognition } from 'react-speech-recognitio
 const VoiceChatbot = () => {
   const { transcript, resetTranscript, browserSupportsSpeechRecognition } = useSpeechRecognition();
   const [isListening, setIsListening] = useState(false);
-  const [messages, setMessages] = useState([]); // Almacenará los mensajes de la conversación
-  const [isMinimized, setIsMinimized] = useState(true); // Inicialmente está minimizado
+  const [messages, setMessages] = useState([]); 
+  const [isMinimized, setIsMinimized] = useState(false); 
 
-  // Función para manejar el inicio/detención de la escucha
+
   const toggleListening = () => {
     if (isListening) {
       SpeechRecognition.stopListening();
@@ -18,19 +18,18 @@ const VoiceChatbot = () => {
     setIsListening(!isListening);
   };
 
-  // Función para manejar la minimización/expansión del chatbot
+
   const toggleMinimize = () => {
-    setIsMinimized(!isMinimized);
+    setIsMinimized(isMinimized);
   };
 
   useEffect(() => {
     if (transcript) {
       console.log("Texto reconocido:", transcript);
 
-      // Agregar el mensaje del usuario al chat
+
       setMessages((prevMessages) => [...prevMessages, { user: true, text: transcript }]);
 
-      // Respuestas predefinidas del chatbot
       let response = '';
       if (transcript.toLowerCase().includes('hola')) {
         response = '¡Hola! ¿Cómo puedo ayudarte?';
@@ -45,10 +44,10 @@ const VoiceChatbot = () => {
         response = 'Lo siento, no entendí tu comando.';
       }
 
-      // Agregar la respuesta del chatbot
+
       setMessages((prevMessages) => [...prevMessages, { user: false, text: response }]);
 
-      resetTranscript(); // Reiniciar la transcripción para el siguiente comando
+      resetTranscript(); 
     }
   }, [transcript]);
 
@@ -70,14 +69,7 @@ const VoiceChatbot = () => {
           </div>
         )}
         <div className="chat-controls">
-          <button onClick={toggleMinimize} className="minimize-btn">
-            {/* Icono de globo flotante cuando está minimizado */}
-            {isMinimized ? (
-              <span className="minimized-icon">💬</span> // Icono de chat cuando está minimizado
-            ) : (
-              'Minimizar'
-            )}
-          </button>
+          
           <button onClick={toggleListening} className="chatbot-btn">
             {isListening ? "Detener Escuchar" : "Iniciar Escuchar"}
           </button>

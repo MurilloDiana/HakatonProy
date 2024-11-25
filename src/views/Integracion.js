@@ -1,34 +1,33 @@
 import React, { useState, useEffect } from "react";
 import { Button, Card, CardHeader, CardBody, CardTitle, Input, Row, Col } from "reactstrap";
-import { Link } from "react-router-dom"; // Importamos Link para redirigir
+import { Link } from "react-router-dom"; 
 
 function Integracion() {
-  const [inputValue, setInputValue] = useState(""); // Estado para el input
-  const [savedInputValue, setSavedInputValue] = useState(""); // Estado para el valor guardado en localStorage
-  const [showAlert, setShowAlert] = useState(false); // Estado para controlar la visibilidad de la alerta
+  const [inputValue, setInputValue] = useState(""); 
+  const [savedInputValue, setSavedInputValue] = useState(""); 
+  const [showAlert, setShowAlert] = useState(false); 
 
-  // Cargar el valor guardado desde localStorage al montar el componente
   useEffect(() => {
     const storedValue = localStorage.getItem("inputValue");
     if (storedValue) {
-      setSavedInputValue(storedValue); // Actualizamos el estado guardado con el valor en localStorage
-      setInputValue(storedValue); // Sincronizamos el input con el valor guardado
+      setSavedInputValue(storedValue); 
+      setInputValue(storedValue); 
     }
   }, []);
 
-  // Controlar cambio en el input
+
   const handleInputChange = (e) => {
-    setInputValue(e.target.value); // Actualizamos el valor del input localmente
+    setInputValue(e.target.value); 
   };
 
-  // Función para guardar el valor cuando se presiona "Aplicar"
+
   const handleApplyClick = () => {
-    setSavedInputValue(inputValue); // Guardamos el valor en el estado persistente
-    localStorage.setItem("inputValue", inputValue); // Guardamos el valor en localStorage
+    setSavedInputValue(inputValue); 
+    localStorage.setItem("inputValue", inputValue); 
     if (inputValue) {
-      setShowAlert(true); // Mostramos el card de alerta solo si hay un valor en el input
+      setShowAlert(true); 
     } else {
-      setShowAlert(false); // Ocultamos el card de alerta si el input está vacío
+      setShowAlert(false); 
     }
   };
 
@@ -36,7 +35,6 @@ function Integracion() {
     <div className="content">
       <Row>
         <Col md="12">
-          {/* Mostrar Card de alerta solo si hay un valor en el input y se presionó "Aplicar" */}
           {showAlert && (
             <Card className="alert-card">
               <CardBody>
@@ -49,7 +47,6 @@ function Integracion() {
             </Card>
           )}
 
-          {/* Card principal para la integración */}
           <Card>
             <CardHeader>
               <CardTitle tag="h3">Integración</CardTitle>
@@ -57,8 +54,8 @@ function Integracion() {
             <CardBody>
               <h4>Integración Pilot</h4>
               <Input
-                value={inputValue} // El valor de input se controla con el estado inputValue
-                onChange={handleInputChange} // Actualizamos el estado inputValue cuando se cambia el valor
+                value={inputValue} 
+                onChange={handleInputChange} 
                 placeholder="Escribe algo..."
               />
               <Button className="button-submit" onClick={handleApplyClick}>

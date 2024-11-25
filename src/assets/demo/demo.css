@@ -202,12 +202,12 @@
 }
 
 .user-message {
-  background-color: #e1f5fe;
+  background-color: #4e9dc2;
   align-self: flex-end;
 }
 
 .bot-message {
-  background-color: #f0f0f0;
+  background-color: #ac3030;
   align-self: flex-start;
 }
 

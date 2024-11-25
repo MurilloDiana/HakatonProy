@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { Card, CardHeader, CardBody, CardTitle, Table, Row, Col, Button } from "reactstrap";
 
 function Tables() {
-  // Estado para la bitácora de acciones
+  
   const [logEntries, setLogEntries] = useState([
     {
       action: "Acción 1",
@@ -21,15 +21,15 @@ function Tables() {
     },
   ]);
 
-  // Función para descargar un archivo .txt para una acción específica
+  
   const downloadLogEntry = (entry) => {
     const logText = `Fecha: ${entry.timestamp}\nAcción: ${entry.action}\nRealizado por: ${entry.performedBy}\n`;
 
-    // Crear un blob con el contenido de la entrada de la bitácora
+    
     const blob = new Blob([logText], { type: "text/plain" });
     const link = document.createElement("a");
     link.href = URL.createObjectURL(blob);
-    link.download = `${entry.action.replace(/\s+/g, '_')}_bitacora.txt`; // Nombre dinámico basado en la acción
+    link.download = `${entry.action.replace(/\s+/g, '_')}_bitacora.txt`; 
     link.click();
   };
 
@@ -61,7 +61,7 @@ function Tables() {
                         <td>{entry.performedBy}</td>
                         <td className="text-center">{entry.timestamp.split(" ")[1]}</td> {/* Hora */}
                         <td className="text-center">
-                          {/* Botón para descargar cada entrada */}
+                        
                           <Button color="primary" onClick={() => downloadLogEntry(entry)}>
                             Descargar
                           </Button>

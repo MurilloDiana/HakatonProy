@@ -11,7 +11,7 @@ import {
 } from "reactstrap";
 
 function Tables() {
-  // Estado para almacenar los productos
+
   const [products, setProducts] = useState([
     {
       sku: "001",

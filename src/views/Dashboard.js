@@ -2,21 +2,16 @@ import React, { useState } from "react";
 import { Button, ButtonGroup, Card, CardHeader, CardBody, CardTitle, Row, Col } from "reactstrap";
 import { Line, Bar } from "react-chartjs-2";
 import { chartExample1, chartExample2, chartExample3, chartExample4 } from "variables/charts.js";
-import { useLocation } from "react-router-dom"; // Importar el hook useLocation
+import { useLocation } from "react-router-dom"; 
 
 function Dashboard() {
   const [bigChartData, setBigChartData] = useState("data1");
 
-  // Usar useLocation para obtener la información de la ubicación actual
   const location = useLocation();
 
-  // Verificar si existe el estado inputValue pasado desde Integracion
   const inputValue = location.state ? location.state.inputValue : "";
   console.log(inputValue)
-  // Para depuración: Verificar si el valor de inputValue es correcto
-  console.log("inputValue en Dashboard:", inputValue); // Esto debe aparecer antes de renderizar el componente
-
-  // Cambiar datos de gráfico
+  console.log("inputValue en Dashboard:", inputValue); 
   const setBgChartData = (name) => {
     setBigChartData(name);
   };
@@ -24,7 +19,6 @@ function Dashboard() {
   return (
     <>
       <div className="content">
-        {/* Alerta para bajo stock, solo mostrada si inputValue está presente */}
         {inputValue && (
           <Row>
             <Col md="12">
@@ -79,7 +73,6 @@ function Dashboard() {
           </Col>
         </Row>
 
-        {/* Cards for performance metrics */}
         <Row>
           <Col lg="4">
             <Card className="card-chart">
