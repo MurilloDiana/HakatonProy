@@ -11,30 +11,40 @@ const VoiceChatbot = () => {
     if (isListening) {
       SpeechRecognition.stopListening();
     } else {
-      SpeechRecognition.startListening();
+      // Activamos el reconocimiento de voz continuo
+      SpeechRecognition.startListening({ continuous: true, language: 'es-ES' });
     }
     setIsListening(!isListening);
   };
 
   const toggleMinimize = () => {
-    setIsMinimized(!isMinimized); 
+    setIsMinimized(!isMinimized); // Fix: Toggle minimization correctly
   };
 
   const sendTranscriptToAPI = async (transcript) => {
+    if (!transcript || transcript.trim() === '') {
+      return 'Por favor, di algo para poder procesarlo.';
+    }
+
     try {
-      const response = await fetch('https://f7bf510c-f712-49d6-875e-2fea8059f1ca-00-nfvfer9tiiiv.janeway.replit.dev/', {
+      const response = await fetch('https://f7bf510c-f712-49d6-875e-2fea8059f1ca-00-nfvfer9tiiiv.janeway.replit.dev/talk-to-pilot', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify({ message: transcript }),
+        body: JSON.stringify({ transcription: transcript }), // Asegúrate de que este campo es el esperado por la API
       });
+
+      // Verificar el estado de la respuesta
+      if (!response.ok) {
+        throw new Error(`Error en la API: ${response.status} - ${response.statusText}`);
+      }
 
       const data = await response.json();
       return data?.response || 'No se recibió respuesta de la API';
     } catch (error) {
       console.error('Error al enviar el mensaje a la API:', error);
-      return 'Hubo un error al procesar la solicitud.';
+      return `Hubo un error al procesar la solicitud: ${error.message}`;
     }
   };
 
@@ -71,7 +81,7 @@ const VoiceChatbot = () => {
         setMessages((prevMessages) => [...prevMessages, { user: false, text: response }]);
       }
 
-      resetTranscript(); 
+      resetTranscript(); // Limpiar la transcripción
     }
   }, [transcript]);
 
@@ -82,7 +92,7 @@ const VoiceChatbot = () => {
   return (
     <div className={`voice-chatbot-container ${isMinimized ? 'minimized' : ''}`}>
       <div className="chatbot-box">
-     
+        {/* Mostrar los mensajes solo cuando no esté minimizado */}
         {!isMinimized && (
           <div className="chat-messages">
             {messages.map((message, index) => (
@@ -97,7 +107,6 @@ const VoiceChatbot = () => {
             {isListening ? "Detener Escuchar" : "Iniciar Escuchar"}
           </button>
         </div>
-       
       </div>
     </div>
   );
